@@ -1,5 +1,6 @@
 %%% ReLU Functionality
-
+function outarray = apply_relu(inarray)
+%{
 function [out_red, out_green, out_blue] = apply_relu(inarray) 
 
     in_red = inarray(:,:,1); % parse for red channel of image
@@ -9,5 +10,7 @@ function [out_red, out_green, out_blue] = apply_relu(inarray)
     out_red = max(in_red, 0);
     out_green = max(in_green, 0);
     out_blue = max(in_blue, 0);
+%}
+    outarray = max(inarray, 0);
 
 end
