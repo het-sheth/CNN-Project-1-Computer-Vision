@@ -1,35 +1,27 @@
-% run_custom_image_test.m
 % This script loads a custom image, prepares it for the CNN,
 % runs it through the network, and analyzes the output.
 
 clear;
 clc;
 
-% --- 1. Load the CNN Parameters and Labels ---
+
 load 'CNNparameters.mat';
-load 'cifar10testdata.mat'; % This file contains the 'classlabels'
+load 'cifar10testdata.mat';
 
-% --- 2. Load and Prepare Your Custom Image ---
-% Find an image on the web (e.g., a cat, a car, or your own face).
-% Save it in your project folder.
-image_filename = 'blank cat.png'; % <-- CHANGE THIS to your image file
+% Load and Prepare Custom Image
+image_filename = 'Fred1.png';
 
-% Read the image into MATLAB
 full_size_image = imread(image_filename);
 
 % The CNN requires a 32x32x3 input. We must resize the image.
-% As discussed in Lecture 4, imresize correctly handles smoothing
-% (anti-aliasing) to prevent artifacts.
 input_image = imresize(full_size_image, [32, 32]);
 
-% --- 3. Run the Image Through the CNN ---
-% Call the "engine" function you created in Step 1.
+% Run the Image Through the CNN
 final_probs = run_cnn_forward_pass(input_image, filterbanks, biasvectors);
 
-% The output is a 1x1x10 array. Squeeze it into a simple vector.
+% Squeeze it into a simple vector.
 final_probs = squeeze(final_probs);
 
-% --- 4. Analyze and Display the Results ---
 % Find the class with the highest probability.
 [max_prob, predicted_class_index] = max(final_probs);
 predicted_class_label = classlabels{predicted_class_index};
@@ -46,10 +38,9 @@ title(sprintf('Prediction: %s (%.1f%%)', predicted_class_label, max_prob * 100))
 set(gca, 'XTickLabel', classlabels, 'XTick', 1:10, 'XTickLabelRotation', 45);
 ylabel('Probability');
 
-% --- 5. Implement the "Unknown" Category Test ---
 % This is the final part of 6e. We can create a simple rule: if the
-% network is not very confident in its top choice, we can classify the
-% object as "unknown". A good threshold is around 50-60%.
+% network is not very confident in its top choice, we can classify
+% it as unknown
 
 confidence_threshold = 0.5; % 50% confidence
 

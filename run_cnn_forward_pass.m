@@ -1,14 +1,6 @@
 function class_probabilities = run_cnn_forward_pass(image, filterbanks, biasvectors)
 % run_cnn_forward_pass: Takes a 32x32x3 image and runs it through the full
 % 18-layer CNN, returning the final 10-class probability vector.
-%
-% Inputs:
-%   image: A 32x32x3 uint8 image.
-%   filterbanks: The cell array of filter banks from CNNparameters.mat.
-%   biasvectors: The cell array of bias vectors from CNNparameters.mat.
-%
-% Output:
-%   class_probabilities: A 1x1x10 array of class probabilities.
 
     % Layer 1: Image Normalization
     current_output = apply_imnormalize(image);
